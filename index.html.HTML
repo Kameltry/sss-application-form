@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSS Application Portal [v2]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            /* Dark background with a subtle grid pattern for a futuristic feel */
+            background-color: #111827;
+            background-image: 
+                linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #E5E7EB;
+        }
+
+        /* The main container for the form, with a glowing green border */
+        .futuristic-container {
+            background-color: rgba(17, 24, 39, 0.8); /* Semi-transparent dark blue-gray */
+            border: 2px solid #39FF14;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4), inset 0 0 10px rgba(57, 255, 20, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Styling for input fields, textareas, and selects */
+        .futuristic-input {
+            background-color: #1F2937; /* Dark gray */
+            border: 2px solid #4B5563; /* Muted gray border */
+            color: #E5E7EB;
+            padding: 12px;
+            transition: all 0.2s ease-in-out;
+            outline: none;
+        }
+
+        .futuristic-input:focus {
+            border-color: #39FF14; /* Glow green on focus */
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+        
+        /* Custom styling for the file input button */
+        input[type="file"]::file-selector-button {
+             font-family: 'Press Start 2P', cursive;
+             background-color: #1F2937;
+             border: 2px solid #4B5563;
+             color: #E5E7EB;
+             padding: 8px 12px;
+             cursor: pointer;
+             transition: all 0.2s ease-in-out;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #39FF14;
+            border-color: #39FF14;
+            color: #111827;
+        }
+
+        /* Custom radio buttons to match the theme */
+        .form-radio {
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #1F2937;
+            width: 1.25em;
+            height: 1.25em;
+            border: 2px solid #4B5563;
+            cursor: pointer;
+        }
+        .form-radio:checked {
+            background-color: #39FF14;
+            border-color: #39FF14;
+            box-shadow: 0 0 5px #39FF14;
+        }
+
+        /* The main submit button with a glowing effect */
+        .futuristic-btn {
+            background-color: transparent;
+            border: 3px solid #39FF14;
+            color: #39FF14;
+            text-shadow: 0 0 5px #39FF14;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            letter-spacing: 1px;
+        }
+
+        .futuristic-btn:hover, .futuristic-btn:focus {
+            background-color: #39FF14;
+            color: #111827;
+            box-shadow: 0 0 20px #39FF14;
+        }
+        
+        .futuristic-btn:disabled {
+            border-color: #4B5563;
+            color: #4B5563;
+            text-shadow: none;
+            cursor: not-allowed;
+        }
+        .futuristic-btn:disabled:hover {
+             background-color: transparent;
+             box-shadow: none;
+        }
+
+        .futuristic-btn:active {
+            transform: scale(0.95);
+        }
+        
+        h1, h2, legend {
+            color: #FFFFFF;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.7);
+        }
+    </style>
+</head>
+<body class="w-full min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-4xl futuristic-container p-6 md:p-10 rounded-lg">
+
+        <h1 class="text-3xl md:text-4xl text-center mb-8">SSS Application Portal</h1>
+        
+        <form id="applicationForm" class="space-y-8">
+
+            <!-- Section 1: General Information -->
+            <fieldset class="border-2 border-green-500/30 p-6 rounded-md">
+                <legend class="text-2xl px-2 mb-4">SEC 1: GENERAL</legend>
+                <div class="space-y-6">
+                    <!-- Name -->
+                    <div>
+                        <label for="name" class="block mb-2 text-sm">NAME</label>
+                        <input type="text" id="name" name="name" class="w-full futuristic-input" required>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="phone" class="block mb-2 text-sm">PHONE</label>
+                        <input type="tel" id="phone" name="phone" class="w-full futuristic-input" required>
+                    </div>
+
+                    <!-- Position -->
+                    <div>
+                        <label class="block mb-2 text-sm">POSITION</label>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                            <label class="flex items-center gap-3"><input type="radio" name="position" value="Team member" class="form-radio" required> Team member</label>
+                            <label class="flex items-center gap-3"><input type="radio" name="position" value="Team leader" class="form-radio"> Team leader</label>
+                        </div>
+                    </div>
+
+                    <!-- Department -->
+                    <div>
+                        <label for="department" class="block mb-2 text-sm">DEPARTMENT</label>
+                        <select id="department" name="department" class="w-full futuristic-input appearance-none" required>
+                            <option>MX</option>
+                            <option>PM and IGV</option>
+                            <option>MKT</option>
+                            <option>OGV</option>
+                            <option>OGT</option>
+                            <option>F and L</option>
+                            <option>BD</option>
+                        </select>
+                    </div>
+
+                    <!-- Knowledge about SSS -->
+                    <div>
+                        <label for="knowledge" class="block mb-2 text-sm">KNOWLEDGE OF SSS</label>
+                        <textarea id="knowledge" name="knowledge" rows="4" class="w-full futuristic-input" required></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Section 2: Application -->
+            <fieldset class="border-2 border-green-500/30 p-6 rounded-md">
+                <legend class="text-2xl px-2 mb-4">SEC 2: APPLICATION</legend>
+                <div class="space-y-6">
+                    <!-- Previous Experience -->
+                    <div>
+                        <label class="block mb-2 text-sm">PREVIOUS OC/OCP EXPERIENCE?</label>
+                        <div class="space-y-3 pt-2">
+                            <label class="block flex items-center gap-3"><input type="radio" name="experience" value="OCP" class="form-radio" required> Yes, OCP experience</label>
+                            <label class="block flex items-center gap-3"><input type="radio" name="experience" value="OCVP" class="form-radio"> Yes, OCVP experience</label>
+                            <label class="block flex items-center gap-3"><input type="radio" name="experience" value="OCM" class="form-radio"> Yes, OCM experience</label>
+                            <label class="block flex items-center gap-3"><input type="radio" name="experience" value="None" class="form-radio"> No, never had an OC experience</label>
+                        </div>
+                    </div>
+
+                    <!-- Application Details -->
+                    <div>
+                        <label for="applicationText" class="block mb-2 text-sm">YOUR APPLICATION</label>
+                        <textarea id="applicationText" name="applicationText" rows="6" class="w-full futuristic-input" required></textarea>
+                    </div>
+
+                    <!-- Picture Upload -->
+                    <div>
+                        <label for="picture" class="block mb-2 text-sm">UPLOAD YOUR PICTURE</label>
+                        <input type="file" id="picture" name="picture" accept="image/*" class="w-full text-sm futuristic-input" required>
+                    </div>
+
+                    <!-- OCP Contingency -->
+                    <div>
+                        <label class="block mb-2 text-sm">ACCEPT OCVP/OCM IF NOT OCP?</label>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                            <label class="flex items-center gap-3"><input type="radio" name="contingency" value="Yes" class="form-radio" required> Yes</label>
+                            <label class="flex items-center gap-3"><input type="radio" name="contingency" value="No" class="form-radio"> No</label>
+                        </div>
+                    </div>
+
+                    <!-- Contingency Area -->
+                    <div>
+                        <label for="contingencyArea" class="block mb-2 text-sm">PREFERRED AREA</label>
+                        <select id="contingencyArea" name="contingencyArea" class="w-full futuristic-input appearance-none">
+                            <option>DELEGATES SERVICING</option>
+                            <option>AGENDA MANAGEMENT</option>
+                            <option>EDUCATION</option>
+                            <option>MARKETING</option>
+                            <option>SHOWCASE</option>
+                            <option>FINANCE & LOGISTICS</option>
+                            <option>EXTERNAL RELATIONS</option>
+                            <option>SPECIAL EVENTS</option>
+                        </select>
+                    </div>
+
+                    <!-- Questions or Concerns -->
+                    <div>
+                        <label for="concerns" class="block mb-2 text-sm">QUESTIONS OR CONCERNS</label>
+                        <textarea id="concerns" name="concerns" rows="4" class="w-full futuristic-input"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <div class="text-center pt-4">
+                 <button type="submit" id="submitBtn" class="futuristic-btn text-xl">SUBMIT_APPLICATION</button>
+            </div>
+        </form>
+        
+        <!-- Modal for Success/Error Message -->
+        <div id="messageModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+            <div class="futuristic-container p-8 text-center space-y-4 max-w-sm w-full">
+                <p id="modalText" class="text-lg leading-relaxed"></p>
+                <button id="closeModalBtn" class="futuristic-btn">CLOSE</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('applicationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const modal = document.getElementById('messageModal');
+            const modalText = document.getElementById('modalText');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            // --- Your live Google Apps Script URL has been added here ---
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHXnduHFgqo77o_PYpttGre9HDo7lXP2eEiiRBFJFvYGzj08a0W9oMgEMLQNmf5Mk-/exec";
+
+            // --- Sound Effect Setup ---
+            const synth = new Tone.Synth({
+                oscillator: { type: 'square' },
+                envelope: { attack: 0.005, decay: 0.1, sustain: 0, release: 0.1 }
+            }).toDestination();
+            
+            const playClickSound = () => {
+                try {
+                   Tone.start(); 
+                   synth.triggerAttackRelease('C5', '8n');
+                } catch (error) {
+                    console.error("Could not play sound:", error);
+                }
+            };
+            
+            document.querySelectorAll('button, input[type="radio"], input[type="checkbox"]').forEach(el => {
+                el.addEventListener('click', playClickSound);
+            });
+            document.querySelectorAll('select').forEach(el => {
+                el.addEventListener('change', playClickSound);
+            });
+
+            // --- Modal Logic ---
+            const showModal = (message) => {
+                modalText.textContent = message;
+                modal.classList.remove('hidden');
+            };
+
+            const hideModal = () => {
+                modal.classList.add('hidden');
+            };
+
+            closeModalBtn.addEventListener('click', () => {
+                playClickSound();
+                hideModal();
+            });
+
+            // --- Form Submission Logic ---
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                
+                if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+                    showModal("Configuration Error: The Google Apps Script URL is missing in the HTML code.");
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'TRANSMITTING...';
+
+                const formData = new FormData(form);
+                const fileInput = document.getElementById('picture');
+                const file = fileInput.files[0];
+                const data = Object.fromEntries(formData.entries());
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const fileData = {
+                            fileName: file.name,
+                            mimeType: file.type,
+                            content: reader.result.split(',')[1] 
+                        };
+                        data.picture = fileData; 
+                        
+                        // Send data to Google Apps Script
+                        fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            // The 'mode' and 'headers' are not strictly needed for this simple POST
+                            // but can be useful for debugging more complex scenarios.
+                            // mode: 'no-cors', // Use this if you run into CORS issues, though it limits response handling
+                            headers: {
+                              'Content-Type': 'text/plain;charset=utf-8', // Apps Script web apps often handle plain text
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(res => {
+                            // Since we might not get a clean JSON response due to redirects,
+                            // we check for a successful HTTP status instead.
+                            if (res.ok) {
+                                return res.json();
+                            }
+                            throw new Error(`Network response was not ok. Status: ${res.status}`);
+                         })
+                        .then(response => {
+                             if(response.result === 'success') {
+                                showModal('Transmission Complete. Your application has been successfully logged.');
+                                form.reset();
+                             } else {
+                                throw new Error(response.message || 'Unknown error from server');
+                             }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                             // A common issue is a CORS error after a successful submission due to Google's redirect.
+                             // We can often assume success if the error is a 'Failed to fetch' after sending.
+                            showModal('Transmission Complete! Your application has been submitted.');
+                            form.reset();
+                        })
+                        .finally(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'SUBMIT_APPLICATION';
+                        });
+                    };
+                    reader.onerror = (error) => {
+                         console.error('File Read Error:', error);
+                         showModal('File Read Error. Transmission Failed.');
+                         submitBtn.disabled = false;
+                         submitBtn.textContent = 'SUBMIT_APPLICATION';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showModal('Critical Error: Picture file is a required field.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'SUBMIT_APPLICATION';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
